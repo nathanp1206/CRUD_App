@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Task</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div  class="newTaskBody">
+        <div class="newTask">
+            <label>Title</label>
+            <input name="title" />
+            <button>Add Task</button>
+        </div>
+        <div class="newTask">
+            <a href="/">Return to Task List</a>
+        </div>
+    </div>
+    <script>
+        const submit = async ()=>{
+            let value = document.querySelector("input").value;
+            let response = await request("/new-task", 'POST', {title:value})
+        }
+
+        const request = async (url, method, data)=>{
+            let response = await fetch(url, {
+                method:method,
+                headers:{
+                    'Content-Type': 'application/json'
+                },
+                body:JSON.stringify(data)
+            })
+            return response.json();
+        }
+
+        document.querySelector("button").addEventListener("click", submit)
+        document.querySelector("button").addEventListener("click", ()=>{
+            alert('Task Created')
+        })
+
+    </script>
+</body>
+</html>
